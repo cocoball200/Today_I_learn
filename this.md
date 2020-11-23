@@ -210,3 +210,4 @@ console.log(arr); // ['a','b','c']
 ```
 console.log(this)
 ```
+참고문헌: 코어 자바스크립트, 정재남 지음, 위키북스
