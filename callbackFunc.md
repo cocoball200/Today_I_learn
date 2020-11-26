@@ -59,6 +59,64 @@ map 메서드는 첫 번째 인자로 callback 함수를 받고, 생략가능한
 콜백 함수를 호출하는 주체가 사용자가 아닌 map 메서드이므로 map 메서드가 콜백 함수를 호출할 때 인자에 어떤
 값들을 어떤 순서로 넘길 것인지는 map 메서드에 따라 달라짐. 이처럼 콜백 함수를 호출할 때 인자에 어떤 값들을 넘길지에 대한 제어권을 가짐. 
 
+# 콜백 지옥과 비동기 제어
+콜백 지옥은 콜백 함수를 익명 함수로 전달하는 과정이 반복되어 코드의 들여쓰기 수준이 감당하기 힘들 정도로 깊어지는 현상. 자바스크립트에서 흔히 발생하는 문제이다. 주로 이벤터 처리나 서버 통신과 같이 비동기적인 작업을 수향하기 위해 이런 형태가 자주 등장한다. 가독성이 떨어지고, 코드를 수정하기 어렵다. 
+
+동기적 코드는 현재 실행 중인 코드가 완료된 후에야 다음 코드를 실행하는 방식이다. cpu의 계산에 의해 즉시 처리가 가능한 대부분의 코드는 동기적인 코드. 계산식이 복잡해서 cpu가 계산하는 데 시간이 많이 필요한 경우라도 동기적 코드. 
+
+비동기적 코드는 현재 실행 중인 코드의 완료 여부와 무관하게 즉시 다음 코드로 넘어간다.  사용자의 요청에 의해 특정 시간이 경과되기 전까지 어떤 함수의 실행을 보류한다거나(setimeout), 사용자의 직접적인 개입이 있을 때 비로소 어떤 함수를 실행하도록 대기한다거나(addEventListner), 웹브라우저 자체가 아닌 별도의 대상에 무언가를 요청하고 그에 대한 응답이 왔을때 비로소 어떤 함수를 실행하도록 대기하는(XMLHttpRequest), 별도의 요청, 실행 대기, 보류 등과 관련된 코드는 비동기적인 코드. 
+
+# 콜백지옥 예시 
+```
+setTimeout(function(name){
+  var coffeeList = name;
+  console.log(coffeeList);
+
+  setTimeout(function(name){
+    coffeeList += ', ' + name;
+    console.log(coffeeList);
+
+    setTimeout(function(name){
+      coffeeList += ', ' + name;
+      console.log(coffeeList);
+          
+      setTimeout(function(name){
+        coffeeList += ', ' + name;
+        console.log(coffeeList);
+      },500,'카페라떼');
+    },500,'카페모카'); 
+  },500,'아메리카노');
+},500,'에스프레소');
+
+```
+# 콜백 지옥 해결 - 기명함수로 변환
+
+```
+var coffeeList = '';
+
+var addEspresso = function(name){
+  coffeeList = name;
+  console.log(coffeeList);
+  setTimeout(addAmericano,500,'아메라카노');
+};
+var addAmericano = function(name){
+  coffeeList += ', '+ name;
+  console.log(coffeeList);
+  setTimeout(addMocha,500,'카페모카');
+};
+var addMocha = function(name){
+  coffeeList += ', '+ name;
+  console.log(coffeeList);
+  setTimeout(addLatte,500,'카페라떼');
+}
+
+var addLatte = function(name){
+  coffeeList += ', '+ name;
+  console.log(coffeeList);
+};
+setTimeout(addEspreso,500,'에스프레소');
+
+```
 참고문헌: 코어 자바스크립트, 정재남 지음, 위키북스
 
 
