@@ -103,4 +103,103 @@ function App() {
 
 export default App;
 ```
+# ES6의 const 와 let 
+```
+import React, { Fragment } from 'react';
+import './App.css';
 
+function App() {
+  const name = 'Mia';
+  return (
+    <>
+      <h1> {name} 안녕!</h1>
+      <h2> 잘 작동하니?</h2>
+    </>
+  );
+}
+```
+
+export default App;
+const는 es6 문법에서 새로 도입되었으며, 한번 지정하고 나면 변경이 불가능한 상수를 선언할 때 사용하는 키워드 입니다. let은 동적인 값을 담을 수 있는 변수를 선언할 때 사용하는 키워드입니다. var 키워드는 scope가 함수 단위이다. let과 const는 scope가 함수 단위가 아닌 블록 단위이므로, if 문 내부에서 선언한 a값은 if 문 밖의 a값을 변경하지 않음. let과 const를 사용할 때 같은 블록 내부애서 중복 선언이 불가능하다 
+
+```
+let a = 1;
+let a = 2 ; //error
+```
+그리고 const는 한번 선언하면 재설정 할 수 없습니다.
+```
+const b =1 ;
+b=2 ;  //error
+```
+즉 let은 한번 선언한 후 값이 유동적으로 변할 수 있을 때만 사용하고, const는 한번 설정한 후 변할 일이 없는 값에 사용합니다. 기본적으로 const를 사용하고, 해당 값을 바꾸어야 할 때는 let을 사용. 
+
+# if문 대신 조건부 연산자. 
+JSX 내부의 자바스크립트 표현식에서 if 문을 사용할 수 없다. 하지만 조건에 따라 다른 내용을 렌더링 해야 할 때는 JSX 밖에서 if문을 사용하거나 사전에 값을 설정하거나, {} 안에 조건부 연산자를 사용하면 됩니다. 삼항연산자를 사용하는 것. 
+
+```
+import React from 'react';
+import './App.css';
+
+function App() {
+  const name = 'Mia';
+  return (
+    <div>
+      {name === 'Mia' ? (<h1>Hello Mia:)</h1>) : (<h2> you are not Mia:)</h2>
+      )}
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+# AND 연산자(&&)를 사용한 조건부 렌더링
+특정 조건을 만족할 때 내용을 보여주고, 만족하지 않을 때 아예 아무것도 렌더링 하지 않아야 하는 상황이 올 수 있다. 이럴 때도 조건부 연산자를 통해 구현할 수 있다. 
+```
+import React from 'react';
+import './App.css';
+
+function App() {
+  const name = 'lala';
+  return (
+    <div>
+      {name === 'Mia' ? <h1>Hello Mia:)</h1> : null
+      }
+    </div>
+  );
+}
+
+export default App;
+
+```
+# && 연산자를 사용해 조건부 렌더링 함. 
+리액트에서 false를 렌더링할 때는 null과 마찬가지로 아무것도 나타나지 않기 때문. 여기서 한가지 주의해야 할 점은, falsy한 값인 0은 예외적으로 화면에 나타난다. 
+```
+import React from 'react';
+import './App.css';
+
+function App() {
+  const name = 'MIA';
+  return <div>{name === 'MIA' && <h1>MIA:) 입니다. </h1>}</div>;
+}
+
+export default App;
+```
+# JSX는 언제 괄호로 감싸나? 
+JSX룰 여러 줄로 작성할 때 괄호로 감싸고, 한 줄로 표현할 수 있는 JSX는 감싸지 않는다.
+
+# undefined 렌더링 하지 않기. 
+```
+import React from 'react';
+import './App.css';
+
+function App() {
+  const name = undefined;
+  return name
+}
+
+export default App;
+
+```
+에러가 뜬다. 
