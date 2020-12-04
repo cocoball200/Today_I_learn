@@ -202,4 +202,94 @@ function App() {
 export default App;
 
 ```
-에러가 뜬다. 
+에러가 뜬다. ,or연산자를 사용하면 해당값이 undefined 일 때 사용할 값을 지정할 수 있다. 
+```
+import React from 'react';
+import './App.css';
+
+function App(){
+  const name = undefined;
+  return name || '값이 undefined 입니다';
+}
+export default App;
+
+or 
+//undefined를 내주고 싶을때. 
+function App(){
+  const name = undefined;
+  retunr <div>{name}<div>;
+}
+export default App;
+
+function App(){
+  const name = undefined;
+  return <div>{name|| '리액트'}</div>
+export default App;
+
+}
+
+```
+
+# 인라인 스타일링
+리액트에서 DOM 요소에 스타일을 적용할 때는 문자열 형태로 넣는 것이 아니라 객체 형태로 넣어 주어야 한다. 스타일 이름 중에서 background-color 처럼 문자가 포함되는 이름이 있는 경우, 아러한 이름은 카멜 표기법으로 작성해야 한다.
+
+```
+import React from 'react';
+
+function App(){
+  const name = '리액트';
+  const style = {
+    backgroundColor: 'black',
+    color: 'pink',
+    fontSize:'48px',
+    fontWeight:'bold',
+    padding:20 //단위를 생략하면 px 가 디폴트 
+  }
+  return <div style ={style}> {name}</div>;
+}
+
+//or 
+function App(){
+  const name = '리액트';
+  return (
+    <div 
+    style ={{
+      backgroundColor: 'black',
+      color: 'pink',
+      fontSize:'48px',
+      fontWeight:'bold',
+      padding:20 //단위를 생략하면 px 가 디폴트 
+    }}
+    >
+    {name}
+    </div>
+  );
+}
+
+export default App;
+```
+
+# class 대신 className
+일반 HTML에소 CSS클래스를 사용할 때 <div class="my_class"> </div>와 같이 class라는 속성을 설정. 하지만 JSX에서는 class가 아닌 className으로 설정해 주어야 한다. 
+```
+//app.js
+function App() {
+  const name = '리액트';
+  return <div className="react">{name}</div>;
+}
+export default App;
+```
+```
+//app.css
+.react{
+  background-color: yellow;
+  color: black;
+  font-size: 50px;
+  font-weight: lighter;
+  padding: 20px;
+}
+```
+
+# 태그는 앞과 뒤가 꼭 닫혀있어야 한다. 
+html은 <input>만 써도 가능하지만, JSX는 오류가 된다. 그러므로 <input></input>으로 해야함. 
+# JSX 내부에 주석을 달려고 할때, {/* ----- */} 이런식으로 작성해야 한다. 
