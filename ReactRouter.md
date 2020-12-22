@@ -59,3 +59,163 @@ href를 쓰면 클릭할때 마다 매 페이지가 로딩된다. 그래서 실�
     <li><Link to ='/contact'>Contact</link></li>
 </ul>
 ```
+# NavLink
+현재 사용자가 어디에 있는지 표시할때 유용하다. NavLink를 사용하면, class="active"가 추가 되어서, .active 로 스타일값도 줄수 있음 마치 hover처럼. 짱짱맨.
+```
+<ul>
+    <li><NavLink to ='/'></NavLink></li>
+    <li><NavLink to ='/topics'>Topics</NavLink></li>
+    <li><NavLink to ='/contact'>Contact</NavLink></li>
+</ul>
+```
+
+# Switch없이 동적으로 짧은 코드로 해결 하는 방법. 
+Nested Routing , Param , useParam
+1. 링크에 넣을 컨텐츠 생성
+2. 컨텐츠의 내용을 보여주기 위해서 빈 리스트를 생성하고, 거기에 <li>를 넣어주고, return해서 뿌림 
+```
+    var lis = [];
+    for(var i=0; i<contents.length; i++){
+        lis.push(<li key={contents[i].id}><NavLink to={'/topics/'+contents[i].id}>{contents[i].title}</NavLink></li>)
+
+    return(
+        <div>
+            <h2>Topics</h2>
+            <ul>
+                {lis}
+            </ul>
+    )
+    }
+``` 
+3. 링크마다 새로운 topics/ 뒤에 새로운 id 값을 주기 위해서  /:topic_id 
+```
+return (
+        <div>
+            <h2>Topics</h2>
+            <ul>
+                {lis}
+            </ul>
+            <Route path="/topics/:topic_id">
+                <Topic></Topic>
+            </Route>
+        </div>
+    )
+```
+
+4. useParam을 이용해 자동으로 topic_id를 가져 올 수 있다. 
+```
+function Topic(){
+    var params = useParams();
+    var topic_id = params.topic_id;
+    var selected_topic = {
+        title:'Sorry',
+        description:'Not Found'    
+    }
+    for(var i=0; i<contents.length; i++){
+        if(contents[i].id === Number(topic_id)){
+            selected_topic = contents[i];
+            break;
+        }
+    }
+    return (
+        <div>
+            <h3>{selected_topic.title}</h3>
+            {selected_topic.description}
+        </div>
+    );
+}
+```
+
+# 전체코드, 참조 생황코딩 react-router 
+라우터가 헷갈릴때 꾸준히 보기! 
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import * as serviceWorker from './serviceWorker';
+import {BrowserRouter, Route, Switch, Link, NavLink, useParams} from 'react-router-dom';
+
+function Home(){
+    return (
+        <div>
+            <h2>Home</h2>
+            Home...
+        </div>
+    )
+}
+
+var contents = [
+    {id:1, title:'HTML', description:'HTML is ...'},
+    {id:2, title:'JS', description:'JS is ...'},
+    {id:3, title:'React', description:'React is ...'},
+]
+
+function Topic(){
+    var params = useParams();
+    var topic_id = params.topic_id;
+    var selected_topic = {
+        title:'Sorry',
+        description:'Not Found'    
+    }
+    for(var i=0; i<contents.length; i++){
+        if(contents[i].id === Number(topic_id)){
+            selected_topic = contents[i];
+            break;
+        }
+    }
+    return (
+        <div>
+            <h3>{selected_topic.title}</h3>
+            {selected_topic.description}
+        </div>
+    );
+}
+
+function Topics(){
+    var lis = [];
+    for(var i=0; i<contents.length; i++){
+        lis.push(<li key={contents[i].id}><NavLink to={'/topics/'+contents[i].id}>{contents[i].title}</NavLink></li>)
+    }
+    return (
+        <div>
+            <h2>Topics</h2>
+            <ul>
+                {lis}
+            </ul>
+            <Route path="/topics/:topic_id">
+                <Topic></Topic>
+            </Route>
+        </div>
+    )
+}
+function Contact(){
+    return (
+        <div>
+            <h2>Contact</h2>
+            Contact...
+        </div>
+    )
+}
+
+function App(){
+    return (
+        <div>
+            <h1>React Router DOM example</h1>
+            <ul>
+                <li><NavLink exact to="/">Home</NavLink></li>
+                <li><NavLink to="/topics">Topics</NavLink></li>
+                <li><NavLink to="/contact">Contact</NavLink></li>
+            </ul>
+            <Switch>
+                <Route exact path="/"><Home></Home></Route>
+                <Route path="/topics"><Topics></Topics></Route>
+                <Route path="/contact"><Contact></Contact></Route>
+                <Route path="/">Not found</Route>
+            </Switch>
+        </div>
+    )
+}
+
+ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
+```
+
