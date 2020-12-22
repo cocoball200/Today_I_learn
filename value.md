@@ -166,5 +166,76 @@ var onemillionehundrenthousand = 1.1E6
 0.1 + 0.2 === 0.3 //false 
 왜냐면 실제로는 0.30000000004에 가까움으로. 
 
+# Undefined 
+Undefined 타입의 값은 undefined만 있다. 값을 아직 가지지 않은 것. 
+
+# void 연산자
+표현식 void__는 어떤 값이든 '무효로 만들어' 항상 결과값을 undefined로 만든다. 기존값은 변화가 없고, 연산 후 값은 복구할 수 없음 
+```
+var a = 42;
+console.log(void a, a) // undefined 42
+```
+# NaN 
+수학 연산 시 두 피 연산자가 전부 숫자가 아닐 경우 유요한 숫자가 나올 수 없는 경우 그 결과는 NaN.
+유효하지 않은 숫자, 실패한 숫자 또는 몹쓸 숫자. 
+```
+var a = 2 / "foo" // NaN
+
+typeof a === "number"; //true
+```
+???? NaN의 typeof 는 숫자임... 
+
+```
+a == NaN //false
+a === NaN // false
+```
+롸? NaN은 어떤 NaN과도 동등하지 않다. 즉 자기 자신과도 같지 않고, 사실상 반사성이 없는 x === x로 식별되지 않는 유일무이한 값. 그래서 isNaN()을 사용하애 함. 여기서 결함은 인자 값이 숫자인지 여부를 평가할 뿐이다. 
+```
+var b = 'foo'
+window.isNaN(b)  //true
+``` 
+b는 string인데...  그래서 ES6는 Number.isNaN()이 등장. 
+
+# 무한대 
+자바에서는 0으로 나누기가 안되었음. 하지만 자바스크립트는 0으로 나눌 수 있음.  infinity/-infinity로 결과값을 준다. 
+
+# 특이한 동등 비교. 
+```
+0 == -0 //true 
+0 === 0 //true
+
+```
+Object.is()를 사용하면 된다. 
+```
+var a = 2 / "foo";
+var b = -3 * 0;
+
+console.log(Object.is(a,NaN)); //true
+console.log(Object.is(b,-0)); //true
+console.log(Object.is(b,0)); //false
+```
+# 레퍼런스. 
+```
+var a =2;
+var b =a;
+b++;
+console.log(a);
+console.log(b);
+```
+원시형의 타입은 언제나 값-복사 방식으로 할당/전달 되어서, 원본이 바뀌어도, 참조된 값에 영향을 주지 않음. 
+하지만 객체는 다름. 
+```
+var c =[1,3,9];
+var d =c;
+d.push(11);
+console.log(c); //[1,3,9,11]
+console.log(d);// [1,3,9,11]
+```
+c와 d는 모두 합성 값이자 동일한 공유값 [1,3,9]에 대한 개별 레퍼런스. c와 d가 [1,3,9]를 소유하는 것이 아니라, 이 값을 동등하게 참조하는 것이다. 따라서 레퍼선스로 실제 공뷰한 배열 값이 변경되면, 이 공유 값 한군데에만 영향을 미치므로, 두 레퍼런스는 갱신된 값 [1,3,9,11]을 동시에 바라본다. 
+
+덜 피곤할때, 이부분 다시 보기, 코어 자바스크립트 책에서 봤을때는 이해가 됐는데, 조금 부족하게 이해가 된거 같음. 
+
+
+
 참고: YOU DON'T KNOW JS
 
