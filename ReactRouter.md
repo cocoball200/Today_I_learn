@@ -3,8 +3,11 @@
 
 # BrowseRouter 
 리액트 라우터 돔을 적용하고 싶은 컴포넌트의 최상위의 컴포넌트를 감싸주는 wrapper 컴포넌트 
-브라우저 라우터라는 컴포넌트로 <BrowserRouter><App/> <BrowserRouter/>을 깜싸준다 
+브라우저 라우터라는 컴포넌트로 App을 깜싸준다 
 App은 브라우저 컴포넌트 안에서 사용할 수 있게 됨. 
+```
+ <BrowserRouter><App/> <BrowserRouter/>
+ ```
 # Route
 url에 따라 달라져야 되는 컴포넌트로 감싸 주면 된다. 
 ```
