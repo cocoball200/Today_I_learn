@@ -78,4 +78,16 @@ obj[Symbol.iterator] = function(){}
 ``` 
 심벌을 직접 정의하려면, Symbol()네이티브를 사용한다. Symbol()은 앞에 new를 붙이면 에러가 나는 유일한 네이티브 생성자임. 기존에 전용/특수/내부 프로퍼티임으로, 주의를 주기 위해 습관적으로 썼던 _가 앞에 붙는 프로퍼티 명이 심볼로 대체될 수있다. 다시말하지만 심볼은 원시값이다. 객체 아님~! 
 
+# 네이티브 프로토타입.
+내장 네이티브 생성자는 각자의 .prototype 객체를 가진다. .prototype 객체에는 해당 객체의 하위 타입별로 고유한 로직이 담겨있다. 
+```
+String.prototype.indexOf() 문자열에서 특정 문자의 위치를 검색
+String.prototype.charArt() 문자열에서 특정 위치의 문자를 반환
+String.prototype.substr(), slice() , substring() 문자열의 일부를 새로운 문자열로 추출 
+String.prototype.toUpperCase() , toLowerCase()  대문자/ 소문자로 변환된 새로운 문자열 생성
+String.prototype.trim() 앞/뒤의 공란이 제거된 새로운 문자열 생성. 
+```
+위의 메소드는 문자열 값을 변경하지 않으며, 수정이 일어나면 기존값으로부터 새로운 값을 생성한다. 
+
+
 참고: you don't know JS
