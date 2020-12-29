@@ -53,3 +53,5 @@ fast-forward  :빨리감기
 
 recursive strategy 
 먼저 master와 issue53의 조상을 찾고, 
+
+참고: 생황코딩 git 
