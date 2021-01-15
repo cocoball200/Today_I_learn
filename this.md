@@ -159,7 +159,7 @@ call 메서드는 메서드의 호출 주체인 함수를 즉시 실행하도록
 var func = function(a,b,c){
     console.log(this,a,b,c);
 };
-func(1,2,3);
+func(1,2,3); //전역 
 func.call({x:1},4,5,6); //this는 {x:1}
 
 var obj = {
