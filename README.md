@@ -4,8 +4,11 @@
 
 # 참고한 목록
 코어자바스크립트 저자: 정재남 
+</br>
 You don't know JS 저자: 카일리 심슨
-이고잉님의 생활코딩 
+</br>
+이고잉님의 생활코딩
+</br>
 
 # 공부한 내용
 자바스크립트 : type,this, hoisting, closure 등
